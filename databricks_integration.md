@@ -84,3 +84,16 @@ To automate your pipelines, set up a **Databricks Workflow (Job)**:
    - **Task 2: Feature Engineering** -> Select Type `Notebook` -> Choose `notebooks/02_Feature_Engineering` -> Set dependency on Task 1.
    - **Task 3: Forecasting** -> Select Type `Notebook` -> Choose `notebooks/03_Sales_Forecasting` -> Set dependency on Task 2.
 3. Add a trigger schedule (e.g., daily at 1:00 AM) to keep Gold tables up to date.
+
+---
+
+## 📊 Step 6: Create and Publish the Interactive Dashboard
+
+We have included a dedicated visualization notebook: **`notebooks/04_Retail_Dashboard.py`**.
+
+1. Open **`notebooks/04_Retail_Dashboard`** inside your cloned repository.
+2. Run all cells to generate the interactive query outputs and plots (daily revenue line chart, store ranking bar chart, top 10 products table, and historical vs. forecast projection area/line comparisons).
+3. In the top right menu of the notebook, click **View** -> **Dashboards** -> **New Dashboard**.
+4. Drag and drop the generated chart grids, add labels, and format into a clean visual dashboard.
+5. Click **Publish** to create a shareable web dashboard for business stakeholders.
+
