@@ -1,0 +1,297 @@
+RetailSense AI: End-to-End Retail Analytics & Sales Forecasting Platform using Azure Databricks, PySpark, Delta Lake, and Grok LLM
+
+Project Objective
+
+Build a cloud-based retail analytics platform that processes the M5 Forecasting Dataset using PySpark on Azure Databricks, implements a Medallion Architecture (Bronze, Silver, Gold) with Delta Lake, performs sales forecasting, visualizes business KPIs through Databricks Dashboards, and integrates the Grok LLM API to provide AI-powered natural language insights and business recommendations.
+
+End-to-End Workflow
+                                     RetailSense AI
+      End-to-End Retail Analytics & Sales Forecasting Platform
+
+                              M5 Forecasting Dataset
+        (sales_train_validation, calendar, sell_prices, evaluation)
+
+                                         │
+                                         ▼
+                          Upload CSV Files to Azure Blob Storage
+                                         │
+                                         ▼
+                          Azure Databricks Workspace
+                          (Single Node Cluster - Free Tier)
+                                         │
+                                         ▼
+                             PySpark Data Ingestion
+                      Read CSV Files → Create Spark DataFrames
+                                         │
+                                         ▼
+                             Schema Validation
+                     Data Quality Checks & Profiling
+                                         │
+                                         ▼
+                     Bronze Layer (Raw Delta Tables)
+               Store raw data exactly as received in Delta format
+                                         │
+                                         ▼
+                          Data Cleaning & Transformation
+                    • Remove duplicates
+                    • Handle missing values
+                    • Fix data types
+                    • Validate records
+                    • Standardize formats
+                                         │
+                                         ▼
+                    Silver Layer (Clean Delta Tables)
+              Clean, standardized and validated business data
+                                         │
+                                         ▼
+                         Data Integration using PySpark
+      Join Sales + Calendar + Sell Prices using business keys
+                                         │
+                                         ▼
+                           Feature Engineering
+         • Revenue
+         • Month
+         • Week
+         • Quarter
+         • Day of Week
+         • Holiday Flag
+         • Weekend Flag
+         • Rolling 7-Day Sales
+         • Rolling 30-Day Sales
+         • Lag Features
+         • Moving Average
+         • Growth Rate
+                                         │
+                                         ▼
+                        Business Aggregations
+        • Store Performance
+        • Category Performance
+        • Department Performance
+        • Product Performance
+        • Daily Sales
+        • Monthly Sales
+        • State-wise Revenue
+                                         │
+                                         ▼
+                     Gold Layer (Business Delta Tables)
+      Optimized analytical tables for reporting and forecasting
+                                         │
+               ┌─────────────────────────┼─────────────────────────┐
+               ▼                         ▼                         ▼
+        Spark SQL Analytics      Sales Forecasting        KPI Summary Builder
+               │                  (Spark MLlib /          (Generate concise
+               │                   Prophet/XGBoost)        business metrics)
+               ▼                         │                         │
+        Business KPIs                    │                         │
+               └───────────────┬─────────┴───────────────┐
+                               ▼                         ▼
+                     Databricks Dashboard         FastAPI Backend
+                               │                         │
+                               │                 User asks question
+                               │                         │
+                               ▼                         ▼
+                     Dashboard Metrics        Prompt Builder
+                                                       │
+                                                       ▼
+                                            Grok LLM API
+                                                       │
+                                                       ▼
+                                AI Retail Analytics Assistant
+                    • Business Insights
+                    • Sales Summary
+                    • Trend Explanation
+                    • Inventory Suggestions
+                    • Forecast Explanation
+                    • Executive Reports
+Complete Project Flow
+Phase 1: Data Collection
+Download the M5 Forecasting dataset.
+Upload all CSV files to Azure Blob Storage.
+
+Input Files
+
+sales_train_validation.csv
+calendar.csv
+sell_prices.csv
+Phase 2: Data Ingestion (Bronze Layer)
+
+Using PySpark:
+
+Read CSV files
+Infer or define schema
+Validate schema
+Store raw data as Delta tables
+
+Output
+
+bronze_sales
+bronze_calendar
+bronze_prices
+Phase 3: Data Cleaning (Silver Layer)
+
+Perform:
+
+Remove duplicate records
+Handle null values
+Convert data types
+Standardize date formats
+Validate IDs
+Apply basic quality checks
+
+Output
+
+silver_sales
+silver_calendar
+silver_prices
+Phase 4: Data Integration
+
+Join:
+
+Sales data
+Calendar data
+Sell prices
+
+Result:
+
+One unified retail analytics table.
+Phase 5: Feature Engineering
+
+Generate business features:
+
+Time Features
+Year
+Month
+Week
+Quarter
+Day Name
+Weekend Flag
+Holiday Flag
+Sales Features
+Revenue
+Daily Sales
+Monthly Sales
+Rolling 7-Day Average
+Rolling 30-Day Average
+Lag-7
+Lag-14
+Lag-28
+Growth Percentage
+Business Features
+Store Revenue
+Product Revenue
+Category Revenue
+Department Revenue
+State Revenue
+Phase 6: Gold Layer
+
+Create optimized Delta tables:
+
+gold_daily_sales
+gold_store_performance
+gold_product_performance
+gold_category_sales
+gold_state_sales
+gold_monthly_sales
+gold_forecasting_input
+
+These are optimized for reporting and AI.
+
+Phase 7: Business Analytics
+
+Use Spark SQL to calculate:
+
+Total Revenue
+Total Units Sold
+Monthly Revenue
+Daily Revenue
+Best-Selling Products
+Worst-Selling Products
+Top Stores
+Category Growth
+Revenue by State
+Holiday Sales
+Average Selling Price
+Phase 8: Sales Forecasting
+
+Train a forecasting model using historical sales data.
+
+Possible options:
+
+Spark MLlib
+Prophet
+XGBoost
+LightGBM (if resources permit)
+
+Generate:
+
+Next 30-day sales forecast
+Product-wise forecast
+Store-wise forecast
+Category-wise forecast
+Phase 9: Dashboard
+
+Create a Databricks Dashboard with:
+
+Executive Dashboard
+Total Revenue
+Total Sales
+Forecasted Sales
+Growth Rate
+Active Products
+Sales Dashboard
+Daily Sales Trend
+Monthly Sales Trend
+Revenue Trend
+Seasonal Trends
+Product Dashboard
+Top Products
+Lowest Products
+Product Revenue
+Product Growth
+Store Dashboard
+Store Rankings
+State-wise Sales
+Regional Performance
+Forecast Dashboard
+Historical vs Forecast
+Forecast Accuracy
+Predicted Sales
+Phase 10: AI Retail Assistant (Grok LLM)
+
+Instead of sending raw data, the FastAPI backend:
+
+Queries Gold tables.
+Builds a concise KPI summary.
+Sends only the summary plus the user's question to the Grok API.
+
+Example capabilities:
+
+Explain sales trends.
+Identify top-performing categories.
+Summarize monthly performance.
+Recommend inventory actions.
+Compare store performance.
+Explain forecast results.
+
+This minimizes API token usage and keeps responses fast.
+
+Phase 11: Deployment
+
+Deploy:
+
+Data processing and dashboards on Azure Databricks.
+FastAPI backend (Azure App Service, Azure Container Apps, or another low-cost hosting option).
+Connect the backend securely to the Grok API using environment variables or Azure Key Vault (optional).
+Tech Stack
+Layer	Technology
+Cloud Storage	Azure Blob Storage
+Compute	Azure Databricks
+Processing	PySpark
+Storage Format	Delta Lake
+SQL Engine	Spark SQL
+Machine Learning	Spark MLlib / Prophet / XGBoost
+Backend API	FastAPI
+LLM	Grok API
+Dashboard	Databricks SQL Dashboard
+Version Control	Git & GitHub(https://github.com/KISHANSINHAA/retail-m5.git) and give proper commit mmsg for each push make sure that if what to change anything i can do
+dashboard to streamlit also (when free tier ended from azure account so i  host it on my streamlit account)
